@@ -30,8 +30,8 @@ http_headers = {
 }
 
 # === AI Model Configuration ===
-available_keys = ['AIzaSyCw6sWPxQ5IuGMYFhqvdZdwWK5rT5FF7XE', 'AIzaSyD68FROsKWYOwjDn-No_vq_itVq0_YMgfM',
-                 "AIzaSyD-m1VxU3v-ay6kwUz4Gq9awwSoDKqTB9U", "AIzaSyAe9qA3_D0OPCGBVav7-wJdcHtHgrpmFfI"]
+available_keys = ['AIzaSyA1WLXflJhGiMrqeWqaz-paXo2kF5Bk3mc', 'AIzaSyA8764z8CRhhPN3ZC20Q1azLrmlPMyGex0',
+                 "AIzaSyAcgYtWzSrBCUjI0xGMX7EndYntTXj7Ycc", "AIzaSyD4P_GEaWnwB7i1-IIMqqAExftBowh8t7A","AIzaSyDNGspMXHeWA_Njh_iBWG3av8Dpy_QNnSY"]
 active_key_index = 0
 
 def initialize_ai_model():
