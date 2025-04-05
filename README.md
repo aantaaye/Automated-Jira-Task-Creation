@@ -1,46 +1,40 @@
 # Project: Automated Task and Test Case Generation with Gemini API and Jira Integration
 
 ## Overview
-This project demonstrates an end-to-end automation pipeline where a manager assigns a high-level development requirement, and two AI-driven agents (powered by Gemini API) handle the following:
+This project demonstrates an end-to-end automation pipeline implemented in a single Python script, `flight_tracking_application_honeywell.py`. A manager assigns a high-level development requirement, and two AI-driven agents (powered by the Gemini API) handle:
 
-1. **Requirement Agent**: Analyzes the incoming requirement and generates 3–5 high-level development subtasks. Each subtask is then created as a Jira ticket via the Jira API.
-2. **Test Agent**: For each development subtask, this agent generates 3–5 comprehensive test cases, each covering critical functionality or edge cases. The test cases are then added as subtasks to the corresponding Jira ticket.
+1. **Requirement Agent**: Analyzes the requirement, generates 3–5 high-level development subtasks, and creates corresponding Jira tickets.
+2. **Test Agent**: For each development subtask, generates 3–5 comprehensive test cases and adds them as Jira subtasks.
 
-By automating subtask and test case creation, the system accelerates sprint planning, ensures consistency, and reduces manual overhead.  
+Automating subtask and test case creation accelerates sprint planning, ensures consistency, and reduces manual overhead.
 
-## Key Components
+## File Structure
 
-- **`manager.py`**: Entry point where the manager submits a high-level requirement. It invokes the Requirement Agent.
-- **`requirement_agent.py`**: Contains the function `create_subtasks(requirement_text, task_id)`, which:
-  1. Constructs a prompt to generate 3–5 subtasks.
-  2. Calls `request_ai_completion()` using Gemini API.
-  3. Parses the JSON response and creates Jira subtasks via `add_subtask()`.
-- **`test_agent.py`**: Defines `create_test_cases(task_details, task_id)`, which:
-  1. Builds a prompt to generate 3–5 test cases per subtask.
-  2. Sends the prompt to Gemini API.
-  3. Parses the JSON and creates Jira subtasks for test cases.
-- **`jira_integration.py`**: Utility module that handles authentication, HTTP requests, and payload formatting for Jira’s REST API.
-- **`utils.py`**: Shared helper functions such as JSON parsing, logging, and error handling.
+- **`flight_tracking_application_honeywell.py`**: Contains all functionality:
+  - Manager input handling
+  - Requirement agent prompt construction and AI calls
+  - Test agent prompt construction and AI calls
+  - JSON parsing of AI responses
+  - Jira API integration for creating subtasks and test-case subtasks
+  - Utility functions for logging and error handling
 
 ## Code Overview
 
-### 1. Manager Submission
+### Manager Flow
 - The manager provides a requirement and a unique `task_id`.
-- `manager.py` calls `create_subtasks(requirement_text, task_id)` from `requirement_agent.py`.
+- The script invokes the requirement agent to generate subtasks.
 
-### 2. Requirement Agent Flow (`requirement_agent.py`)
-1. **Prompt Construction**: A detailed instruction template is filled with the requirement text.
-2. **AI Call**: `request_ai_completion(prompt)` sends the instruction to Gemini API.
-3. **Response Parsing**: The raw text response is scanned for a JSON array of subtasks.
-4. **Jira Subtask Creation**: For each subtask, `add_subtask(task_id, title, description)` invokes the Jira API and records the returned ticket key.
-5. **Return**: A list of created subtask keys is returned to the manager script.
+### Requirement Agent
+1. **Prompt Construction**: Builds an instruction template with the requirement text.
+2. **AI Call**: Sends the prompt to the Gemini API via `request_ai_completion()`.
+3. **Response Parsing**: Extracts a JSON array of subtasks from the AI response.
+4. **Jira Subtask Creation**: Calls `add_subtask()` to create each subtask in Jira.
 
-### 3. Test Agent Flow (`test_agent.py`)
-1. **Prompt Construction**: Similar to the requirement agent, but focused on test cases.
-2. **AI Call**: Sends the test-case-generation prompt to Gemini.
+### Test Agent
+1. **Prompt Construction**: Builds a test-case-generation instruction for each subtask.
+2. **AI Call**: Sends the test prompt to Gemini API.
 3. **Response Parsing**: Extracts JSON array of test cases.
-4. **Jira Subtask Creation**: Each test case is added as a subtask under its parent development subtask.
-5. **Return**: The created test-case subtask keys.
+4. **Jira Subtask Creation**: Adds each test case as a subtask under its parent development subtask.
 
 ## Dependencies
 - Python 3.9+
@@ -59,7 +53,7 @@ By automating subtask and test case creation, the system accelerates sprint plan
    ```bash
    pip install -r requirements.txt
    ```
-3. **Configure environment variables** (e.g., in a `.env` file):
+3. **Configure environment variables**:
    ```dotenv
    GEMINI_API_KEY=your_gemini_api_key
    JIRA_BASE_URL=https://your-domain.atlassian.net
@@ -70,12 +64,12 @@ By automating subtask and test case creation, the system accelerates sprint plan
 ## Usage
 1. **Assign a Requirement**:
    ```bash
-   python manager.py --task "Implement user authentication flow"
+   python flight_tracking_application_honeywell.py --task "Implement user authentication flow"
    ```
 2. **Review Created Subtasks** in Jira.
-3. **Test Agent Execution** (can be triggered automatically after subtasks creation or manually):
+3. **Run Test Agent** (automatically triggered after subtasks creation or manually):
    ```bash
-   python test_agent.py --parent-task TASK-1234
+   python flight_tracking_application_honeywell.py --parent-task TASK-1234 --run-tests
    ```
 4. **Verify Test Case Subtasks** in Jira.
 
@@ -85,8 +79,8 @@ By automating subtask and test case creation, the system accelerates sprint plan
 - **Gemini API Errors**: Logged with status codes and messages.
 
 ## Extensibility
-- **Additional Agents**: Add more AI agents for documentation, code review, or deployment tasks.
-- **Custom Prompts**: Modify prompt templates in `requirement_agent.py` and `test_agent.py` for different task structures.
+- **Additional Agents**: Extend the script with more AI agents for documentation, code review, or deployment.
+- **Custom Prompts**: Modify the prompt templates in the script for different task structures.
 
 ## License
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
