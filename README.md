@@ -6,28 +6,7 @@ This project demonstrates an end-to-end automation pipeline where a manager assi
 1. **Requirement Agent**: Analyzes the incoming requirement and generates 3–5 high-level development subtasks. Each subtask is then created as a Jira ticket via the Jira API.
 2. **Test Agent**: For each development subtask, this agent generates 3–5 comprehensive test cases, each covering critical functionality or edge cases. The test cases are then added as subtasks to the corresponding Jira ticket.
 
-By automating subtask and test case creation, the system accelerates sprint planning, ensures consistency, and reduces manual overhead.
-
-## Architecture
-
-```plaintext
-+----------------+       +----------------+       +--------------+       +----------------+
-| Manager Client |  -->  | Requirement    |  -->  | Jira API     |  -->  | Jira Tickets   |
-| (Assigns Task) |       | Agent (Gemini) |       | Integration  |       | (Subtasks)     |
-+----------------+       +----------------+                             +----------------+
-                                           |
-                                           v
-                                   +----------------+
-                                   | Test Agent     |
-                                   | (Gemini)       |
-                                   +----------------+
-                                           |
-                                           v
-                                   +----------------+
-                                   | Jira API       |
-                                   | (Test Cases)   |
-                                   +----------------+
-```  
+By automating subtask and test case creation, the system accelerates sprint planning, ensures consistency, and reduces manual overhead.  
 
 ## Key Components
 
