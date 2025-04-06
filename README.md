@@ -43,23 +43,48 @@ Automating subtask and test case creation accelerates sprint planning, ensures c
 - Gemini API client (internal)
 - Jira REST API credentials (URL, API token, user email)
 
-## Setup
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-org/auto-task-generator.git
-   cd auto-task-generator
-   ```
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Configure environment variables**:
-   ```dotenv
-   GEMINI_API_KEY=your_gemini_api_key
-   JIRA_BASE_URL=https://your-domain.atlassian.net
-   JIRA_USER_EMAIL=you@example.com
-   JIRA_API_TOKEN=your_jira_token
-   ```
+**Setup Instructions:**
+
+1.  **Replace with Your Email ID:**
+    Update the `EMAIL` constant in the code with the email address associated with your Jira account:
+
+    ```python
+    EMAIL = "your-email@example.com"  # Replace with your own email
+    ```
+
+2.  **Generate Jira API Token:**
+    Generate an API token for Jira authentication by visiting the following link:
+    [Generate API Token]([invalid URL removed])
+    Replace the `API_TOKEN` constant in the code with the generated token:
+
+    ```python
+    API_TOKEN = "your-generated-api-token"  # Replace with your generated API token
+    ```
+
+3.  **Set Up Your Jira Base URL:**
+    Create a project on Jira and navigate to your Jira board. Identify your Jira domain (workspace) and update the `JIRA_BASE_URL` constant. The base URL follows the format `https://your-domain.atlassian.net`. Replace `your-domain` with your actual Jira workspace name.
+
+    For example, if your workspace name is `exampleworkspace`, it should be:
+
+    ```python
+    JIRA_BASE_URL = "[https://exampleworkspace.atlassian.net](https://exampleworkspace.atlassian.net)"
+    ```
+
+4.  **Verify and Update Your Project Key:**
+    On your Jira board, create a test ticket to verify your project key. The project key is the prefix found in your issue keys (e.g., CPG, FTS, FT). Update the `PROJECT_KEY` constant in the code accordingly:
+
+    ```python
+    PROJECT_KEY = "YOUR_PROJECT_KEY"  # Replace with your actual project key (e.g., CPG, FTS, FT, etc.)
+    ```
+
+5.  **(Optional) Update Gemini API Keys:**
+    The code includes default Gemini API keys in the `gemini_keys` list. These should function as provided. However, if you wish to generate new keys, you can do so by visiting:
+    [Generate Gemini API Key]([invalid URL removed])
+    If you generate your own API keys, update the `gemini_keys` list in the code:
+
+    ```python
+    gemini_keys = ['your-first-gemini-api-key', 'your-second-gemini-api-key']
+    ```
 
 ## Usage
 1. **Assign a Requirement**:
